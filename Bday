@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shreya's Playlist</title>
+  <style>
+    body {
+      background: #fff0f6;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #d63384;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: #ffe3ec;
+      margin: 10px;
+      padding: 10px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎧 Shreya's Birthday Playlist 🎉</h1>
+  <ul>
+    <li>💕 Tum Mile – Love Reprise</li>
+    <li>🎶 Raatan Lambiyan</li>
+    <li>🎤 Kesariya</li>
+    <li>🌈 Tera Ban Jaunga</li>
+    <li>🎂 Happy Birthday Song (Surprise!)</li>
+  </ul>
+</body>
+</html>
