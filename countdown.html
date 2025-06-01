@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Countdown to Shreya's Birthday 🎂</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #c9a0ff, #e0bbff);
+      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+    }
+    .countdown {
+      font-size: 2em;
+      margin: 20px 0;
+    }
+    .message {
+      font-size: 1.3em;
+      margin-top: 20px;
+      color: #ffe6ff;
+    }
+    canvas {
+      position: absolute;
+      top: 0; left: 0;
+      z-index: -1;
+    }
+  </style>
+</head>
+<body>
+  <h1>Countdown to Shreya's Birthday 🎉</h1>
+  <div class="countdown" id="countdown"></div>
+  <div class="message" id="message"></div>
+  <canvas id="fireworks"></canvas>
+  <script>
+    const bday = new Date();
+    bday.setMonth(5); // June (0-based)
+    bday.setDate(12);
+    const today = new Date();
+    if (today > bday) bday.setFullYear(today.getFullYear() + 1);
+    bday.setHours(0, 0, 0, 0);
+
+    const messages = [
+      "You're my sunshine! ☀️",
+      "Your smile lights up the world 🌟",
+      "Counting down to magic ✨",
+      "You're so precious 💎",
+      "Can't wait to celebrate 🎈",
+      "Love you loads 💖",
+      "Stay awesome, Shreya 💜",
+    ];
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = bday - now;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hrs = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const mins = Math.floor((diff / (1000 * 60)) % 60);
+      const secs = Math.floor((diff / 1000) % 60);
+      const cd = document.getElementById("countdown");
+      const msg = document.getElementById("message");
+      
+      if (diff <= 0) {
+        cd.innerHTML = "🎂 It's your Birthday, Shreya! 💜";
+        msg.innerHTML = "Wishing you endless joy and BTS vibes! 🎶";
+        startFireworks();
+        return;
+      }
+
+      cd.innerHTML = `${days}d ${hrs}h ${mins}m ${secs}s`;
+      msg.innerHTML = messages[Math.floor(Math.random() * messages.length)];
+    }
+
+    setInterval(updateCountdown, 1000);
+
+    function startFireworks() {
+      const canvas = document.getElementById("fireworks");
+      const ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      let particles = [];
+
+      function createParticle() {
+        const colors = ['#ff69b4', '#ffccff', '#cc66ff', '#9933ff'];
+        return {
+          x: canvas.width / 2,
+          y: canvas.height / 2,
+          radius: Math.random() * 4 + 1,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          speedX: Math.random() * 6 - 3,
+          speedY: Math.random() * 6 - 3,
+          life: 100
+        };
+      }
+
+      function animate() {
+        ctx.fillStyle = "rgba(0,0,0,0.1)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        particles.forEach((p, i) => {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+          p.x += p.speedX;
+          p.y += p.speedY;
+          p.life--;
+          if (p.life <= 0) particles.splice(i, 1);
+        });
+        if (particles.length < 200) {
+          for (let i = 0; i < 5; i++) particles.push(createParticle());
+        }
+        requestAnimationFrame(animate);
+      }
+      animate();
+    }
+  </script>
+</body>
+</html>
